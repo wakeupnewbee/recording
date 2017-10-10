@@ -1,2 +1,8 @@
-=IF(Sheet2!A1<>Sheet1!A1,"Sheet2:"&Sheet2!A1&" vs Sheet1:"&Sheet1!A1, "")
+//compare sheet1 and sheet2, output the different in sheet 3
+
+=IF(Sheet2!A1<>Sheet1!A1,"Sheet2:"&Sheet2!A1&" vs Sheet1:"&Sheet1!A1, "") 
+
+
+//compare sheet1 and sheet2, need to select all in ordert o process
+
 =A1<>Sheet1!A1
