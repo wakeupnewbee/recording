@@ -1,0 +1,123 @@
+How can I wrap text at a certain column size?
+
+up vote
+96
+down vote
+favorite
+30
+I know that I can use something like cat test.txt | pr -w 80 to wrap lines to 80 characters wide, but that puts a lot of space on the top and bottom of the printed lines and it does not work right on some systems
+
+What's the best way to force a text file with long lines to be wrapped at a certain width?
+
+Bonus points if you can keep it from breaking words.
+
+text-processing
+shareimprove this question
+edited Aug 8 '16 at 15:18
+
+GKFX
+11019
+asked Nov 23 '11 at 5:58
+
+cwd
+10.6k48106144
+add a comment
+6 Answers
+active oldest votes
+up vote
+124
+down vote
+accepted
+You are looking for
+
+fold -w 80 -s text.txt
+-w tells the width of the text, where 80 is standard.
+-s tells to break at spaces, and not in words.
+This is the standard way, but there are other systems, which need "-c" instead of "-w".
+
+shareimprove this answer
+edited Feb 26 '15 at 15:44
+
+Stéphane Chazelas
+234k44416684
+answered Nov 23 '11 at 6:07
+
+Rainer Bendig
+2,1121108
+  	 	
+Works on OS X, too, but filename needs to be after args. Thanks! – rdrey Sep 2 '14 at 22:13
+2	 	
+On a side note, to nicely format e-mails for text-only reply, I use: fold -s -w 80 email.txt | sed 's/^.*$/> &/' – Marcello Romani Feb 10 '15 at 21:10
+2	 	
+@MarcelloRomani, shouldn't you use a width of 78 since you're prepending two characters? – nanny Feb 26 '15 at 14:59
+1	 	
+Hmm... I guess so. Thanks for pointing that out :) – Marcello Romani Feb 27 '15 at 12:35
+  	 	
+Is there something like fold that lets you specify a string to wrap on? – will Feb 1 at 2:30
+show 1 more comment
+up vote
+36
+down vote
+In addition to fold, take a look at fmt. fmt tries to choose line breaks intelligently to make text look good. It doesn't break long words, rather it wraps only by spaces. It will also join adjacent lines, which is good for prose but bad for log files or other formatted text.
+
+shareimprove this answer
+edited Sep 14 '15 at 8:09
+
+user2683246
+17314
+answered Nov 23 '11 at 18:28
+
+Jonathan
+57133
+3	 	
+I especially like fmt -t compared to fold – lkraav Dec 24 '12 at 21:26
+add a comment
+up vote
+11
+down vote
+Another (less known) tool that does what you want is wrap from GNU Talkfilters:
+
+wrap -w 80 < textfile
+Also (off topic):
+
+but that puts a lot of space on the top and bottom of the printed lines
+add -t when invoking pr to omit headers/trailers:
+
+   -t, --omit-header
+          omit page headers and trailers
+shareimprove this answer
+answered Jun 24 '13 at 15:34
+
+don_crissti
+38.8k1395136
+add a comment
+up vote
+7
+down vote
+1) assured fixed line width with word breaking:
+
+fold -w 80 <text.txt
+2) assured fixed line width with extraordinary word breaking (a word gets broken only if it is too large to fit in a line):
+
+fold -sw 80 <text.txt
+3) promising fixed line width without any word breaking (if word is too large to fit in a line, it is still left as it is, so finally some lines may be larger in size than you need):
+
+fmt -w 80 <text.txt
+shareimprove this answer
+answered Sep 14 '15 at 9:31
+
+user2683246
+17314
+  	 	
+Underrated answer. Available on most systems. Nice one. – Merc Oct 4 '16 at 2:09
+add a comment
+up vote
+6
+down vote
+And for more formatting options, look at par -- http://www.nicemice.net/par/
+
+shareimprove this answer
+answered Apr 21 '13 at 13:45
+
+sendmoreinfo
+1,534928
