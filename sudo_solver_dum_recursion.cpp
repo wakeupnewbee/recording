@@ -20,6 +20,7 @@ int check(int box[][10], int x, int y){
             return 0;
         }
     }
+    cout << <<endl;
     return 1;
 }
 
