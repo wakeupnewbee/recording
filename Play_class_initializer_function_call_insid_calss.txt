@@ -1,0 +1,44 @@
+#include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+class  A{
+    int x;
+    int y;
+    public:
+    A(int c) : y(c){}
+    void pop();
+    int pop2();
+};
+
+void A::pop(){
+    x=y;
+}
+int A::pop2(){
+    pop();
+    return x+y;
+}
+
+class B{
+    A a;
+    public:
+    B(int);
+    int pop();
+};
+
+B::B(int h): a(h){
+}
+
+int B::pop(){
+    return a.pop2();
+}
+
+int main()
+{
+    B b(2);
+    cout << b.pop() << endl;
+
+   return 0;
+}
